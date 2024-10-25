@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  color: white;
+}
+
+:root {
+    --background-base: rgb(34, 37, 42);
+    --background-light: rgb(51, 54, 59);
+    --background-light-hover: rgb(53, 56, 61);
+    --background: rgb(41, 44, 51);
+    --text-subdued: rgb(165, 165, 165);
+    --light-border: rgb(100, 100, 100);
+}
+
+body {
+    margin: 0px;
+    overflow: hidden;
+}
+
+.brand {
+  font-size: 13px;
+  color: var(--text-subdued);
+  margin-left: 10px;
+}
+
+.searchBar {
+  position: absolute;
+  transform: translateX(-50%);
+  color: white;
+  margin-left: 50%;
+  font-size: 11px;
+  background: var(--background-light);
+  outline: none;
+  border: 0.5px solid var(--light-border);
+  border-radius: 4px;
+  padding-block: 3px;
+  text-align: center;
+  width: 30vw;
+  -webkit-app-region: no-drag;
+}
+
+.searchBar::placeholder {
+  color: var(--text-subdued);
+}
+
+.searchBar:hover {
+  background: var(--background-light-hover);
+  cursor: pointer;
+  z-index: 50;
+}
+
+.topBar {
+    width: 100vw;
+    height: 30px;
+    background: var(--background-base);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    -webkit-app-region: drag;
+}
+
+#window-controls {
+  display: flex;
+}
+
+#window-controls button {
+  -webkit-app-region: no-drag;
+  background: none;
+  border: none;
+  color: white;
+  width: 40px;
+  height: 100%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#window-controls button:hover {
+  background-color: #4c4c4c;
+}
+
+#drag-region {
+  flex-grow: 1;
+}
+
+.tabs {
+    width: 100vw; 
+    height: 40px;
+    background: var(--background-base);
+    display: flex;
+}
+
+.tab {
+  margin: 0px;
+  padding: 0px;
+  color: var(--text-subdued);
+  background: var(--background);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 10px;
+  gap: 8px;
+  cursor: pointer;
+  border-right: 1px solid rgb(26, 26, 26);
+}
+
+
+.tab > .close-icon {
+  opacity: 0;
+  color: white;
+  margin: 0px;
+  padding: 0px;
+}
+
+.tab:hover > .close-icon {
+  opacity: 1;
+}
+
+.tab > p {
+  font-size: 14px;
+  color: var(--text-subdued);
+}
+
+.tabs-scroller {
+  display: flex;
+  width: 90%;
+}
+
+.tabs-action {
+  gap: 10px;
+  height: 40px;
+  width: 10%;
+  justify-content: right;
+}
+
+.tabs-action-item {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-top: 6px;
+}
+
+.tabs-action-item:hover {
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+
+.content {
+    width: 100vw;
+    height: calc(100vh - 135px);
+    background: var(--background);
+    overflow-y: auto;
+    outline: none;
+    border: none;
+    padding: 20px;
+    font-size: 15px;
+}
+
+.bottomBar {
+    width: 100vw;
+    height: 25px;
+    background: var(--background-base);
+    display: flex;
+    user-select: none;
+}
+
+.wordCount {
+  margin-top: 4px;
+  padding-left: 10px;
+  font-size: 11px;
+  color: var(--text-subdued);
+  user-select: none;
+}

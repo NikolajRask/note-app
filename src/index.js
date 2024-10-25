@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 const baseWindow = "windows/base.html"
 
@@ -12,7 +12,10 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false, // Remove the default frame
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
@@ -20,6 +23,23 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, baseWindow));
 
+  ipcMain.on('window-minimize', () => {
+    mainWindow.minimize();
+  });
+
+  // Listen for maximize/unmaximize toggle event
+  ipcMain.on('window-maximize', () => {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+    } else {
+      mainWindow.maximize();
+    }
+  });
+
+  // Listen for close event
+  ipcMain.on('window-close', () => {
+    mainWindow.close();
+  });
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
