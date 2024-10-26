@@ -13,6 +13,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     frame: false, // Remove the default frame
+    icon: path.join(__dirname, '/svgs/icon.png'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

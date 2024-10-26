@@ -9,27 +9,21 @@
 <body>
     <div class="topBar">
         <div id="drag-region">
+            <img class="logo" src="../svgs/icon.png" width="22" height="22">
             <p class="brand">NoteLed</p>
         </div>
-        <input class="searchBar" placeholder="NoteLed">
+        <input class="searchBar ingore-search-close"" placeholder="NoteLed" id="searchBar">
         <div id="window-controls">
             <button id="minimize">_</button>
             <button id="maximize">□</button>
             <button id="close">×</button>
         </div>
     </div>
-    <div class="tabs" id="tabs">
-        <div class="tabs-scroller">
-            <div class="tab">
-                <img src="../svgs/note.svg" width="18" height="18" style="color:white">
-                <p>
-                    Test Node
-                </p>
-                <img src="../svgs/cross.svg" width="16" height="16" id="close-icon" class="close-icon">
-            </div>
+    <div class="tabs">
+        <div class="tabs-scroller" id="tabs">
         </div>
         <div className="tabs-actions">
-            <div class="tabs-action-item">
+            <div class="tabs-action-item" id="newNote">
                 <img src="../svgs/plus.svg" width="18" height="18">
             </div>
         </div>
@@ -38,11 +32,43 @@
 
     </div>
     <div class="bottomBar">
-        <p class="wordCount" id="wordCount">0 Words</p>
-        <p class="wordCount" id="characterCount">0 Characters</p>
+        <div>
+            <p class="wordCount" id="wordCount">0 Words</p>
+            <p class="wordCount" id="characterCount">0 Characters</p>
+        </div>
+        <div>
+            <p class="utf">Windows (CRLF)</p>
+            <p class="utf">UTF-8</p>
+        </div>
     </div>
+    <div class="contextMenu" id="editTabContext">
+        <div class="contextMenuItem">
+            <img src="../svgs/plus.svg" width="18" height="18">
+            <p>Rename</p>
+        </div>
+        <div class="contextMenuItem">
+            <img src="../svgs/plus.svg" width="18" height="18">
+            <p>Close Tab</p>
+        </div>
+        <div class="contextMenuItem">
+            <img src="../svgs/plus.svg" width="18" height="18">
+            <p>Open</p>
+        </div>
+        <div class="contextMenuItem">
+            <img src="../svgs/plus.svg" width="18" height="18">
+            <p>Delete</p>
+        </div>
+    </div>
+    <div class="searchDrawer" id="searchDrawer">
+        <input class="search" placeholder="Search notes by name">
+        <div class="searchResults" id="searchResults"></div>
+    </div>
+
+    <script src="../scripts/db.js"></script>
     <script src="../scripts/renderer.js"></script>
     <script src="../scripts/tabs.js"></script>
     <script src="../scripts/editor.js"></script>
+    <script src="../scripts/search.js"></script>
+    <script src="../scripts/main.js"></script>
 </body>
 </html>

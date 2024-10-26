@@ -43,6 +43,77 @@ body {
   -webkit-app-region: no-drag;
 }
 
+.searchDrawer {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 31vw;
+  margin-left: 50%;
+  top: 9px;
+  background: var(--background-base);
+  height: 200px;
+  border-radius: 5px;
+  z-index: 50;
+  /* box-shadow: 0px 0px 3px 2px rgba(0,0,0,0.11); */
+  display: none;
+  border: 1px solid var(--light-border)
+}
+
+.search {
+  width: calc(100% - 30px);
+  margin-left: 5px;
+  margin-top: 5px;
+  outline: none;
+  border: none;
+  background: var(--background);
+  padding-inline: 10px;
+  padding-block: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.searchResults {
+  width: calc(100% - 12px);
+  height: calc(100% - 40px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-left: 6px;
+}
+
+.searchResult {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+  padding-inline: 10px;
+  padding-block: 5px;
+  width: 100%;
+}
+
+.searchResult > div {
+  display: flex;
+  gap: 10px;
+}
+
+.searchResult > .searchResultInfo > p {
+  margin: 0px;
+  padding: 0px;
+  font-size: 13px;
+}
+
+.searchResultOptions > p {
+  margin: 0px;
+  padding: 0px;
+  font-size: 13px;
+  margin-right: 15px;
+  color: var(--text-subdued);
+}
+
+.searchResult:hover {
+  cursor: pointer;
+  background: rgba(255,255,255,0.04);
+}
+
 .searchBar::placeholder {
   color: var(--text-subdued);
 }
@@ -55,7 +126,7 @@ body {
 
 .topBar {
     width: 100vw;
-    height: 30px;
+    height: 40px;
     background: var(--background-base);
     display: flex;
     align-items: center;
@@ -73,8 +144,9 @@ body {
   background: none;
   border: none;
   color: white;
-  width: 40px;
-  height: 100%;
+  width: 50px;
+  height: 40px;
+  margin: 0px;
   font-size: 16px;
   cursor: pointer;
 }
@@ -83,8 +155,18 @@ body {
   background-color: #4c4c4c;
 }
 
+#window-controls button:last-of-type:hover {
+  background-color: #d64a4a;
+}
+
 #drag-region {
   flex-grow: 1;
+  display: flex;
+}
+
+.logo {
+  margin-left: 10px;
+  margin-top: 9px;
 }
 
 .tabs {
@@ -155,7 +237,7 @@ body {
 
 .content {
     width: 100vw;
-    height: calc(100vh - 135px);
+    height: calc(100vh - 145px);
     background: var(--background);
     overflow-y: auto;
     outline: none;
@@ -169,13 +251,56 @@ body {
     height: 25px;
     background: var(--background-base);
     display: flex;
+    justify-content: space-between;
     user-select: none;
 }
 
+.bottomBar > div {
+  display: flex;
+  align-items: center;
+}
+
+
+.utf {
+  padding-right: 10px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text-subdued);
+  user-select: none;
+}
+
 .wordCount {
-  margin-top: 4px;
+  margin-top: 10px;
   padding-left: 10px;
   font-size: 11px;
   color: var(--text-subdued);
   user-select: none;
+}
+
+.contextMenu {
+  width: 200px;
+  max-height: 500px;
+  background: var(--background-base);
+  border: 1px solid var(--light-border);
+  border-radius: 5px;
+  position: absolute;
+  display: none;
+}
+
+.contextMenuItem {
+  display: flex;
+  gap: 10px;
+  padding-inline: 15px;
+  padding-block: 10px;
+}
+
+.contextMenuItem:hover {
+  cursor: pointer;
+  background: rgba(255,255,255,0.04);
+}
+
+.contextMenuItem > p {
+  margin: 0px;
+  padding: 0px;
+  font-size: 13px;
 }
