@@ -1,6 +1,8 @@
 const fs = require('fs');
 const $TABS = document.getElementById("tabs");
 const $TABS_CONTEXT_MENU = document.getElementById('editTabContext')
+let currentTabContext
+
 
 function getAllTabs() {
     db.serialize(() => {
@@ -16,7 +18,6 @@ function getAllTabs() {
 }
 
 function setUpTabs() {
-    console.log("e");
     db.run(
         'CREATE TABLE IF NOT EXISTS files (id TEXT PRIMARY KEY, name TEXT, content TEXT, isTab BOOLEAN, isTabOpen BOOLEAN, created_at TEXT, updated_at TEXT)'
     );
@@ -35,34 +36,90 @@ function setUpTabs() {
 }
 
 function addTabToUI(tab) {
-    console.log(tab);
     $TABS.innerHTML += `
-        <div class="tab" id="tab-${tab.id}">
+        <div class="tab" onclick="editNote('${tab.id}')" oncontextmenu="tabContextMenu('${tab.id}', event)" id="tab-${tab.id}" ${tab.isTabOpen ? `style="background: var(--background)"` : ""}>
             <img src="../svgs/note.svg" width="18" height="18" style="color:white">
-            <p>
-                ${tab.name}
-            </p>
-            <img onClick="closeTab('${tab.id}')" src="../svgs/cross.svg" width="16" height="16" id="close-icon" class="close-icon">
+            <input disabled="true" value="${tab.name}" id="rename-input-${tab.id}" class="renameInput">
+            <img onClick="event.stopPropagation(); closeTab('${tab.id}')" src="../svgs/cross.svg" width="16" height="16" id="close-icon" class="close-icon">
         </div>
     `;
 
-    document.getElementById(`tab-${tab.id}`).addEventListener('click', (e) => {
-        console.log(e.clientX, e.clientY)
-    })
+}
 
-    document.getElementById(`tab-${tab.id}`).oncontextmenu = (e) => {
-        console.log(e)
-        $TABS_CONTEXT_MENU.style.top = `${e.clientY}px`
-        $TABS_CONTEXT_MENU.style.left = `${e.clientX}px`
-        $TABS_CONTEXT_MENU.style.display = "block"
+function editNote(id) {
+    db.run(`UPDATE files SET isTabOpen = false WHERE isTabOpen = true`)
+
+    db.run(`UPDATE files set isTabOpen = true WHERE id = '${id}' AND isTab = true`)
+    currentOpenTabId = id
+    reloadTabs()
+    reloadContent()
+}
+
+function deleteNote(id) {
+    try {
+        db.run(`DELETE FROM files WHERE id = '${id}'`)
+        if (currentOpenTabId == id) {
+            currentOpenTabId = undefined
+        }
+        reloadTabs()
+        loadAllSearchResults()   
+        reloadContent()
+    } catch (error) {
+        console.log(error)
     }
 }
+
+function tabContextMenu(tabId, event) {
+    $TABS_CONTEXT_MENU.style.top = `${event.clientY}px`
+    $TABS_CONTEXT_MENU.style.left = `${event.clientX}px`
+    $TABS_CONTEXT_MENU.style.display = "block"
+    currentTabContext = tabId
+}
+
+function reloadContent() {
+
+    let index = 0
+
+    db.serialize(() => {
+
+        let isEmpty = true
+
+        db.each('SELECT * FROM files WHERE isTabOpen = true', (err, row) => {
+            if (err) {
+                console.log(err)
+            } else {
+                if (index == 1) {
+                    throw new Error("Something went wrong with the tab management")
+                }
+                console.log(row)
+                editor.innerHTML = row.content
+                index++
+                isEmpty = false
+                updateLineCount()
+            }
+        }, () => {
+            if (isEmpty) {
+                document.getElementById('noTabOpenContent').style.display = "flex"
+            } else {
+                document.getElementById('noTabOpenContent').style.display = "none"
+            }
+        });
+    });
+}
+
+
+
 
 
 function closeTab(tabId) {
     if (tabId) {
         try {
             db.run(`UPDATE files SET isTab = false, isTabOpen = false WHERE id = "${tabId}"`)
+            if (currentOpenTabId == tabId) {
+                currentOpenTabId = undefined
+
+                reloadContent()
+            }
             reloadTabs()
             loadAllSearchResults()
         } catch (error) {
@@ -72,7 +129,21 @@ function closeTab(tabId) {
     
 }
 
+function closeAllTabs() {
+    try {
+        db.run(`UPDATE files SET isTab = false, isTabOpen = false`)
+        currentOpenTabId = undefined
+        reloadContent()
+        reloadTabs()
+        loadAllSearchResults()
+    } catch (error) {
+        console.log("This id does not exists")
+    }
+}
+
+
 function createNewFile() {
+    db.run(`UPDATE files SET isTabOpen = false WHERE isTabOpen = true`)
     const stmt = db.prepare(
         'INSERT INTO files (id, name, content, isTab, isTabOpen, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
     );
@@ -81,6 +152,8 @@ function createNewFile() {
             console.error(err.message);
         } else {
             reloadTabs()
+            loadAllSearchResults()
+            reloadContent()
         }
     });
     stmt.finalize();
@@ -115,3 +188,45 @@ document.addEventListener('click', () => {
 document.addEventListener('contextmenu', () => {
     $TABS_CONTEXT_MENU.style.display = "none"
 }, true)
+
+
+document.getElementById('tab-context-close').addEventListener('click', () => {
+    closeTab(currentTabContext)
+})
+
+document.getElementById('tab-context-open').addEventListener('click', () => {
+    editNote(currentTabContext)
+})
+
+document.getElementById('tab-context-delete').addEventListener('click', () => {
+    deleteNote(currentTabContext)
+})
+
+document.getElementById('tab-context-rename').addEventListener('click', () => {
+    document.getElementById(`rename-input-${currentTabContext}`).removeAttribute("disabled")
+    document.getElementById(`rename-input-${currentTabContext}`).focus()
+
+    document.getElementById(`rename-input-${currentTabContext}`).addEventListener('blur', () => {
+        document.getElementById(`rename-input-${currentTabContext}`).setAttribute("disabled","true")  
+        let value = document.getElementById(`rename-input-${currentTabContext}`).value
+        if (value.trim() == "") {
+            value = "Untitled Note"
+        }
+        try {
+            console.log(value)
+            db.run(`UPDATE files SET name = '${value}' WHERE id = '${currentTabContext}'`)
+            loadAllSearchResults()
+            reloadTabs()    
+        } catch (error) {
+          console.log(error)  
+        }
+    })
+
+    document.getElementById(`rename-input-${currentTabContext}`).addEventListener('change', () => {
+        document.getElementById(`rename-input-${currentTabContext}`).setAttribute("disabled","true")  
+    })
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    reloadContent()
+})

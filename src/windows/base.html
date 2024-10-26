@@ -31,10 +31,36 @@
     <div class="content" id="editor" contenteditable="true">
 
     </div>
+    <div class="noTabOpenContent" id="noTabOpenContent">
+
+        <img class="logo" src="../svgs/icon.png" width="200" height="200">
+        <div class="commandShortCut">
+            <p class="commandShortCutText">Search For Notes</p>
+            <p class="highlight">CTRL</p>
+            <span>+</span>
+            <p class="highlight">P</p>
+        </div>
+        <div class="commandShortCut">
+            <p class="commandShortCutText">Create New Note</p>
+            <p class="highlight">CTRL</p>
+            <span>+</span>
+            <p class="highlight">N</p>
+        </div>
+        <div class="commandShortCut">
+            <p class="commandShortCutText">Close All Tabs</p>
+            <p class="highlight">CTRL</p>
+            <span>+</span>
+            <p class="highlight">SHIFT</p>
+            <span>+</span>
+            <p class="highlight">C</p>
+        </div>
+
+    </div>
     <div class="bottomBar">
         <div>
             <p class="wordCount" id="wordCount">0 Words</p>
             <p class="wordCount" id="characterCount">0 Characters</p>
+            <p class="wordCount" id="linesCount">0 Ln</p>
         </div>
         <div>
             <p class="utf">Windows (CRLF)</p>
@@ -42,33 +68,34 @@
         </div>
     </div>
     <div class="contextMenu" id="editTabContext">
-        <div class="contextMenuItem">
+        <div class="contextMenuItem" id="tab-context-rename">
             <img src="../svgs/plus.svg" width="18" height="18">
             <p>Rename</p>
         </div>
-        <div class="contextMenuItem">
+        <div class="contextMenuItem" id="tab-context-close">
             <img src="../svgs/plus.svg" width="18" height="18">
             <p>Close Tab</p>
         </div>
-        <div class="contextMenuItem">
+        <div class="contextMenuItem" id="tab-context-open">
             <img src="../svgs/plus.svg" width="18" height="18">
             <p>Open</p>
         </div>
-        <div class="contextMenuItem">
+        <div class="contextMenuItem" id="tab-context-delete">
             <img src="../svgs/plus.svg" width="18" height="18">
             <p>Delete</p>
         </div>
     </div>
     <div class="searchDrawer" id="searchDrawer">
-        <input class="search" placeholder="Search notes by name">
+        <input class="search ignore-search-close" id="realSearch" placeholder="Search notes by name">
         <div class="searchResults" id="searchResults"></div>
     </div>
 
     <script src="../scripts/db.js"></script>
     <script src="../scripts/renderer.js"></script>
-    <script src="../scripts/tabs.js"></script>
     <script src="../scripts/editor.js"></script>
+    <script src="../scripts/tabs.js"></script>
     <script src="../scripts/search.js"></script>
     <script src="../scripts/main.js"></script>
+    <script src="../scripts/keybinds.js"></script>
 </body>
 </html>
