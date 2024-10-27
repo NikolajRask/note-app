@@ -1,6 +1,3 @@
-// renderer.js
-const { ipcRenderer } = require('electron');
-
 document.getElementById('minimize').addEventListener('click', () => {
   ipcRenderer.send('window-minimize');
 });

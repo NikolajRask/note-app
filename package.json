@@ -1,8 +1,8 @@
 {
-  "name": "nodeapp",
-  "productName": "nodeapp",
+  "name": "noteled",
+  "productName": "NoteLed",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "An simple app for taking notes.",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -36,10 +36,14 @@
     "sqlite3": "^5.1.7"
   },
   "build": {
-  "appId": "com.nkjrask.noteled",
-  "win": {
-    "target": "nsis",
-    "icon": "./src/svgs/icon.png"
+    "appId": "com.nkjrask.noteled",
+    "win": {
+      "target": "nsis",
+      "icon": "./src/svgs/icon.png"
+    },
+    "files": [
+      "src/**/*",
+      "./database/database.db"
+    ]
   }
-}
 }

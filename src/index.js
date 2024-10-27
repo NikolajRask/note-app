@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
-const baseWindow = "windows/base.html"
+const sqlite3 = require('sqlite3').verbose();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -24,7 +24,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, baseWindow));
+  mainWindow.loadFile(path.join(__dirname, "./windows/base.html"));
 
   ipcMain.on('window-minimize', () => {
     mainWindow.minimize();
@@ -44,7 +44,7 @@ const createWindow = () => {
     mainWindow.close();
   });
 
-  // // Open the DevTools.
+  // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 };
 
@@ -60,6 +60,12 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
+  });
+
+  const dbDirectory = path.join(app.getPath('userData'), 'database.db');
+
+  ipcMain.handle('get-db', () => {
+    return dbDirectory
   });
 });
 
