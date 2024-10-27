@@ -391,12 +391,16 @@ body {
   margin: 0px;
   font-size: 14px;
   color: var(--text-subdued);
+  padding-inline: 20px;
+  text-align: center;
 }
 
 .noSearchResults > h3 {
   padding: 0px;
   margin: 0px;
   font-size: 17px;
+  padding-inline: 20px;
+  text-align: center;
 }
 
 .noSearchResults > button {

@@ -94,7 +94,6 @@ function reloadContent() {
                 if (index == 1) {
                     throw new Error("Something went wrong with the tab management")
                 }
-                console.log(row)
                 editor.innerHTML = row.content
                 index++
                 isEmpty = false

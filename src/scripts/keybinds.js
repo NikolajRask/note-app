@@ -34,3 +34,10 @@ document.addEventListener('keydown', function(event) {
     renameCurrentFile()
   }
 });
+
+// Prevent devTools being opened, Disable this when developing
+document.addEventListener('keydown', function(event) {
+  if (event.ctrlKey && event.shiftKey && event.code === 'KeyI') {
+    event.preventDefault(); // Optional: prevent default behavior
+  }
+});

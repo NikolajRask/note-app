@@ -51,7 +51,7 @@ function loadAllSearchResults(searchTerm) {
                     searchResults.innerHTML = `
                     
                         <div class="noSearchResults">
-                            <h3>We couldn't find your notes :(</h3>
+                            <h3>We couldn't find any notes :(</h3>
                             <p>Try searching for something else</p>
                         </div>
                     
@@ -118,6 +118,7 @@ function openFile(fileId) {
             reloadTabs()
             loadAllSearchResults()
             reloadContent()
+            currentOpenTabId = fileId
         } catch (error) {
             console.log("This id does not exists")
         }
