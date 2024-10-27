@@ -12,6 +12,8 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 800,
+    minHeight: 600,
     frame: false, // Remove the default frame
     icon: path.join(__dirname, '/svgs/icon.png'),
     webPreferences: {

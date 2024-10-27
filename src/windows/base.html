@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node App</title>
+    <title>NoteLed</title>
     <link rel="stylesheet" href="../styles/index.css">
 </head>
 <body>
@@ -14,9 +14,15 @@
         </div>
         <input class="searchBar ingore-search-close"" placeholder="NoteLed" id="searchBar">
         <div id="window-controls">
-            <button id="minimize">_</button>
-            <button id="maximize">□</button>
-            <button id="close">×</button>
+            <button id="minimize">
+                <img src="../svgs/min.svg" width="16" height="16">
+            </button>
+            <button id="maximize">
+                <img src="../svgs/maximize.svg" width="16" height="16">       
+            </button>
+            <button id="close">
+                <img src="../svgs/closeApp.svg" width="16" height="16">
+            </button>
         </div>
     </div>
     <div class="tabs">
@@ -69,19 +75,19 @@
     </div>
     <div class="contextMenu" id="editTabContext">
         <div class="contextMenuItem" id="tab-context-rename">
-            <img src="../svgs/plus.svg" width="18" height="18">
+            <img src="../svgs/rename.svg" width="18" height="18">
             <p>Rename</p>
         </div>
         <div class="contextMenuItem" id="tab-context-close">
-            <img src="../svgs/plus.svg" width="18" height="18">
+            <img src="../svgs/close.svg" width="18" height="18">
             <p>Close Tab</p>
         </div>
         <div class="contextMenuItem" id="tab-context-open">
-            <img src="../svgs/plus.svg" width="18" height="18">
+            <img src="../svgs/open.svg" width="18" height="18">
             <p>Open</p>
         </div>
-        <div class="contextMenuItem" id="tab-context-delete">
-            <img src="../svgs/plus.svg" width="18" height="18">
+        <div class="contextMenuItem hover-delete" id="tab-context-delete">
+            <img src="../svgs/delete.svg" width="18" height="18" style="color:white">
             <p>Delete</p>
         </div>
     </div>

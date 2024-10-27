@@ -117,11 +117,12 @@ function closeTab(tabId) {
             db.run(`UPDATE files SET isTab = false, isTabOpen = false WHERE id = "${tabId}"`)
             if (currentOpenTabId == tabId) {
                 currentOpenTabId = undefined
-
-                reloadContent()
             }
+
+
             reloadTabs()
             loadAllSearchResults()
+            reloadContent()
         } catch (error) {
             console.log("This id does not exists")
         }
@@ -147,13 +148,15 @@ function createNewFile() {
     const stmt = db.prepare(
         'INSERT INTO files (id, name, content, isTab, isTabOpen, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
     );
-    stmt.run(cuid(), "Untitled Note", "", true, true, now(), now(), (err) => {
+    const id = cuid()
+    stmt.run(id, "Untitled Note", "", true, true, now(), now(), (err) => {
         if (err) {
             console.error(err.message);
         } else {
             reloadTabs()
             loadAllSearchResults()
             reloadContent()
+            document.getElementById('editor').focus()
         }
     });
     stmt.finalize();
