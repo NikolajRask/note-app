@@ -223,7 +223,7 @@ document.getElementById('tab-context-rename').addEventListener('click', () => {
         }
         try {
             console.log(value)
-            db.run(`UPDATE files SET name = '${value}' WHERE id = '${currentTabContext}'`)
+            db.run(`UPDATE files SET name = ? WHERE id = ?`, [value, currentTabContext])
             loadAllSearchResults()
             reloadTabs()    
         } catch (error) {
@@ -254,7 +254,7 @@ function renameCurrentFile() {
             }
             try {
                 console.log(value)
-                db.run(`UPDATE files SET name = '${value}' WHERE id = '${currentOpenTabId}'`)
+                db.run(`UPDATE files SET name = ? WHERE id = ?`, [value, currentOpenTabId])
                 loadAllSearchResults()
                 reloadTabs()    
             } catch (error) {

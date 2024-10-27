@@ -40,7 +40,7 @@ editor.addEventListener("input", () => {
 
     if (currentOpenTabId != undefined) {
         try {
-            db.run(`UPDATE files SET content = '${editor.innerHTML}', updated_at = '${now()}' WHERE id = '${currentOpenTabId}'`)
+            db.run(`UPDATE files SET content = ?, updated_at = ? WHERE id = ?`, [editor.innerHTML, now(), currentOpenTabId]);  
         } catch (error) {
             throw new Error(error)
         }
