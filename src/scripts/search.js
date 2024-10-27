@@ -27,7 +27,7 @@ function loadAllSearchResults(searchTerm) {
 
             let isEmpty = true
 
-            db.each(`SELECT * FROM files WHERE name LIKE '%${searchTerm}%' ORDER BY updated_at`, (err, row) => {
+            db.each(`SELECT * FROM files WHERE name LIKE '%${searchTerm}%' ORDER BY updated_at DESC`, (err, row) => {
                 if (err) {
                     console.error(err.message);
                     setUpTabs();
@@ -67,7 +67,7 @@ function loadAllSearchResults(searchTerm) {
 
             let isEmpty = true
 
-            db.each('SELECT * FROM files ORDER BY updated_at', (err, row) => {
+            db.each('SELECT * FROM files ORDER BY updated_at DESC', (err, row) => {
                 if (err) {
                     console.error(err.message);
                     setUpTabs();

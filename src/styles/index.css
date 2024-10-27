@@ -51,7 +51,7 @@ body {
 .searchBar {
   position: absolute;
   transform: translateX(-50%);
-  color: white;
+  color: var(--text-subdued);
   margin-left: 50%;
   font-size: 11px;
   background: var(--background-light);
@@ -353,15 +353,13 @@ body {
 }
 
 .renameInput {
-  max-width: 250px;
-  min-width: 10px;
-  width: 100%;
   color: white;
   background: transparent;
   outline: none;
   border: none;
   pointer-events: none;
   overflow: visible;
+  box-sizing: border-box;
 }
 
 .noSearchResults {
@@ -427,6 +425,13 @@ body {
 }
 
 
-.hover-delete:hover {
-  background: rgb(223, 65, 65);
+.input-container {
+  display: inline-block;
+  position: relative;
+}
+/* Hidden element to measure text width */
+.text-measurer {
+  visibility: hidden;
+  white-space: pre; /* Keep whitespace to match the input */
+  position: absolute;
 }

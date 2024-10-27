@@ -25,3 +25,12 @@ document.addEventListener('keydown', function(event) {
       createNewFile()
     }
 });
+
+// CTRL + R for creating a new note //Disable this when developing
+document.addEventListener('keydown', function(event) {
+  if (event.ctrlKey && event.code === 'KeyR') {
+    event.preventDefault(); // Prevents the default print dialog
+    
+    renameCurrentFile()
+  }
+});
